@@ -152,7 +152,10 @@ def twitter_listener():
         cursor.close()
     # Connecting to the database
 
+    select = "SELECT * from twitter ;"
 
+    dataframe = pd.read_sql(select, con = connection)
+    
     dataframe['Date'] = pd.to_datetime(dataframe['Date'])
     dataframe['Text'] = dataframe['Text'].str.replace("'", "''")
 
@@ -164,7 +167,7 @@ def twitter_listener():
     for i in dataframe.index:
         row = dataframe.loc[i]
         query = """
-        INSERT into twitter(Date, Pos, Neg, Neu, Us, Text) values('%s','%s','%s','%s','%s','%s');
+        INSERT into twitter (Date, Pos, Neg, Neu, Us, Text) values('%s','%s','%s','%s','%s','%s');
         """ % (row['Date'], row['Pos'],
                row['Neg'], row['Neu'], 
                row['Us'], row['Text'])
