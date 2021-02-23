@@ -153,8 +153,8 @@ def twitter_listener():
     # Connecting to the database
 
     
-    data_sent['date'] = pd.to_datetime(data_sent['date'])
-    data_sent['Text'] = data_sent['text'].str.replace("'", "''")
+    data_sent['Date'] = pd.to_datetime(data_sent['Date'])
+    data_sent['Text'] = data_sent['Text'].str.replace("'", "''")
 
 
     # Inserting each row
@@ -162,7 +162,7 @@ def twitter_listener():
         row = data_sent.loc[i]
         query = """
         INSERT into twitter (date, pos, neg, neu, us, text) values('%s','%s','%s','%s','%s','%s');
-        """ % (row['Pate'], row['Pos'],
+        """ % (row['Date'], row['Pos'],
                row['Neg'], row['Neu'], 
                row['Us'], row['Text'])
         single_insert(connection, query)
