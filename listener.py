@@ -60,7 +60,7 @@ def twitter_listener():
                 id_user = [y.user.screen_name for y,x in twitter_dicc]
                 texto = [y.text for y,x in twitter_dicc]
             
-                data_sent = pd.DataFrame(list(zip(fecha,positive,negative,neutral,id_user,texto)),columns = ['Date','Pos','Neg','Neu','User','Text'])
+                data_sent = pd.DataFrame(list(zip(fecha,positive,negative,neutral,id_user,texto)),columns = ['Date','Pos','Neg','Neu','Us','Text'])
             
                 data_sent.Neg = data_sent.Neg.apply(lambda x: x*-1)
             
@@ -94,7 +94,7 @@ def twitter_listener():
     texto = [y.text for y,x in twitter_dicc]
 
 
-    data_sent = pd.DataFrame(list(zip(fecha,positive,negative,neutral,id_user,texto)),columns = ['Date','Pos','Neg','Neu','User','Text'])
+    data_sent = pd.DataFrame(list(zip(fecha,positive,negative,neutral,id_user,texto)),columns = ['Date','Pos','Neg','Neu','Us','Text'])
 
 
     data_sent.Neg = data_sent.Neg.apply(lambda x: x*-1)
@@ -130,7 +130,7 @@ def twitter_listener():
         name_Table = "twitter"
 
 
-        sqlCreateTable = "create table "+name_Table+" (Date timestamp, Pos numeric, Neg numeric, Neu numeric, User varchar, Text varchar);"
+        sqlCreateTable = "create table "+name_Table+" (Date timestamp, Pos numeric, Neg numeric, Neu numeric, Us varchar, Text varchar);"
 
      
 
@@ -164,10 +164,10 @@ def twitter_listener():
     for i in dataframe.index:
         row = dataframe.loc[i]
         query = """
-        INSERT into twitter(Date, Pos, Neg, Neu, User, Text) values('%s','%s','%s','%s','%s','%s');
+        INSERT into twitter(Date, Pos, Neg, Neu, Us, Text) values('%s','%s','%s','%s','%s','%s');
         """ % (row['Date'], row['Pos'],
                row['Neg'], row['Neu'], 
-               row['User'], row['Text'])
+               row['Us'], row['Text'])
         single_insert(connection, query)
     # Close the connection
     connection.close()
