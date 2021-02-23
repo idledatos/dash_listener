@@ -22,7 +22,6 @@ def twitter_listener():
         nltk.download('vader_lexicon')
     except:
         print('vader_lexicon installed')
-        continue
 
 
 
