@@ -130,7 +130,7 @@ def twitter_listener():
         name_Table = "twitter"
 
 
-        sqlCreateTable = "create table "+name_Table+" (Date timestamp, Pos numeric, Neg numeric, Neu numeric, Us varchar, Text varchar);"
+        sqlCreateTable = "create table "+name_Table+" (date timestamp, pos numeric, neg numeric, neu numeric, us varchar, text varchar);"
 
      
 
@@ -152,23 +152,17 @@ def twitter_listener():
         cursor.close()
     # Connecting to the database
 
-    select = "SELECT * from twitter ;"
-
-    dataframe = pd.read_sql(select, con = connection)
     
-    dataframe['Date'] = pd.to_datetime(dataframe['Date'])
-    dataframe['Text'] = dataframe['Text'].str.replace("'", "''")
-
-
-    # In[11]:
+    data_sent['date'] = pd.to_datetime(data_sent['date'])
+    data_sent['Text'] = data_sent['text'].str.replace("'", "''")
 
 
     # Inserting each row
-    for i in dataframe.index:
-        row = dataframe.loc[i]
+    for i in data_sent.index:
+        row = data_sent.loc[i]
         query = """
-        INSERT into twitter (Date, Pos, Neg, Neu, Us, Text) values('%s','%s','%s','%s','%s','%s');
-        """ % (row['Date'], row['Pos'],
+        INSERT into twitter (date, pos, neg, neu, us, text) values('%s','%s','%s','%s','%s','%s');
+        """ % (row['Pate'], row['Pos'],
                row['Neg'], row['Neu'], 
                row['Us'], row['Text'])
         single_insert(connection, query)
